@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'screens/login_screen.dart';
+import 'screens/profile_screen.dart'; // Importa a ProfileScreen
 import 'providers/character_provider.dart';
 
 void main() {
@@ -19,7 +20,12 @@ class FitnessRPGApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginScreen(),
+        // Define as rotas do aplicativo
+        initialRoute: '/',
+        routes: {
+          '/': (context) => LoginScreen(),
+          '/profile': (context) => ProfileScreen(), // Rota para a ProfileScreen
+        },
       ),
     );
   }
