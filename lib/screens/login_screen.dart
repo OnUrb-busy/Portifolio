@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'profile_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   // Chave global para o formulário
