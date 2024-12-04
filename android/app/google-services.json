@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "429644857495",
+    "project_id": "questyourselfy",
+    "storage_bucket": "questyourselfy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429644857495:android:48c642839ec7cff8eca9d2",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXQTO7RsUST9tKPZ6017AMl6KhXI0Q0sA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
