@@ -37,50 +37,54 @@ void main() async {
 class FitnessRPGApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => CharacterProvider()),
-        ChangeNotifierProvider(create: (_) => QuestProvider()),
-        ChangeNotifierProvider(create: (_) => CombatProvider()),
-      ],
-      child: MaterialApp(
-        title: 'Fitness RPG',
-        theme: ThemeData.dark(),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => AppWrapper(),
-          '/profile': (context) => ProfileScreen(),
-          '/quests': (context) => QuestScreen(),
-          '/combat': (context) => CombatScreen(),
-        },
-      ),
-    );
-  }
-}
-
-class AppWrapper extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final auth = FirebaseAuth.instance;
-
     return StreamBuilder<User?>(
-      stream: auth.authStateChanges(),
+      stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(body: Center(child: CircularProgressIndicator()));
+          return MaterialApp(
+            home: Scaffold(body: Center(child: CircularProgressIndicator())),
+          );
         }
 
-        if (snapshot.hasData) {
+        if (snapshot.hasData && snapshot.data != null) {
           final userId = snapshot.data!.uid;
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Provider.of<CharacterProvider>(context, listen: false)
-                .loadCharacter(userId: userId);
-          });
-
-          return ProfileScreen();
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (_) {
+                  final characterProvider = CharacterProvider();
+                  characterProvider.loadCharacter(userId: userId);
+                  return characterProvider;
+                },
+              ),
+              ChangeNotifierProvider(
+                create: (context) {
+                  final characterProvider =
+                      Provider.of<CharacterProvider>(context, listen: false);
+                  return QuestProvider(
+                      userId: userId, characterProvider: characterProvider);
+                },
+              ),
+              ChangeNotifierProvider(create: (_) => CombatProvider()),
+            ],
+            child: MaterialApp(
+              title: 'Fitness RPG',
+              theme: ThemeData.dark(),
+              initialRoute: '/profile',
+              routes: {
+                '/profile': (context) => ProfileScreen(),
+                '/quests': (context) => QuestScreen(),
+                '/combat': (context) => CombatScreen(),
+              },
+            ),
+          );
         }
 
-        return LoginScreen();
+        return MaterialApp(
+          title: 'Fitness RPG',
+          theme: ThemeData.dark(),
+          home: LoginScreen(),
+        );
       },
     );
   }

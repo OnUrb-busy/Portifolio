@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'character_provider.dart';
 
 class Quest {
   final String name;
@@ -48,28 +50,135 @@ class Quest {
 
 class QuestProvider with ChangeNotifier {
   List<Quest> _quests = [];
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
   final Map<int, Timer> _timers = {};
+  Timer? _renewalTimer;
+  final String userId;
+  late CharacterProvider _characterProvider;
 
   List<Quest> get quests => _quests;
 
-  QuestProvider() {
+  // Construtor modificado para injeção de FirebaseFirestore
+  QuestProvider({
+    required this.userId,
+    required CharacterProvider characterProvider,
+    FirebaseFirestore? firestore,
+  }) : _firestore = firestore ?? FirebaseFirestore.instance {
+    _characterProvider = characterProvider;
+    _init();
+  }
+
+  Future<void> _init() async {
+    await checkAndRenewQuests();
+    _startAutoRenewal(); // Inicia a renovação automática a cada minuto
+  }
+
+  /// Verifica e renova quests se necessário
+  Future<void> checkAndRenewQuests() async {
+    try {
+      DocumentSnapshot doc =
+          await _firestore.collection('quests').doc(userId).get();
+
+      if (doc.exists) {
+        final data = doc.data() as Map<String, dynamic>?;
+        final lastRenewalTimestamp = data?['lastRenewal'] as Timestamp?;
+
+        if (lastRenewalTimestamp != null) {
+          final lastRenewalDate = lastRenewalTimestamp.toDate();
+          final now = DateTime.now();
+
+          if (now.difference(lastRenewalDate).inMinutes >= 10) {
+            await _renewQuests();
+          } else {
+            await loadQuests(userId);
+          }
+        } else {
+          await _renewQuests();
+        }
+      } else {
+        await _renewQuests();
+      }
+    } catch (e) {
+      print("Erro ao verificar e renovar quests: $e");
+    }
+  }
+
+  /// Renova as quests
+  Future<void> _renewQuests() async {
+    _cancelAllTimers();
+    _quests = [
+      Quest(
+          name: '30 flexões',
+          description: 'Faça 30 flexões',
+          rewardPoints: 50,
+          penaltyPoints: 10),
+      Quest(
+          name: '60 agachamentos',
+          description: 'Faça 60 agachamentos',
+          rewardPoints: 70,
+          penaltyPoints: 15),
+      Quest(
+          name: '40 abdominais',
+          description: 'Faça 40 abdominais',
+          rewardPoints: 100,
+          penaltyPoints: 20),
+    ];
+    await saveLastRenewal();
+    await saveQuests();
+    _startQuestTimers();
+    notifyListeners();
+  }
+
+  /// Salva a data de última renovação no Firestore
+  Future<void> saveLastRenewal() async {
+    try {
+      await _firestore.collection('quests').doc(userId).set({
+        'lastRenewal': FieldValue.serverTimestamp(),
+        'quests': _quests.map((quest) => quest.toMap()).toList(),
+      });
+    } catch (e) {
+      print("Erro ao salvar data de renovação: $e");
+    }
+  }
+
+  /// Inicia o timer de renovação automática
+  void _startAutoRenewal() {
+    _renewalTimer?.cancel();
+    _renewalTimer = Timer.periodic(Duration(minutes: 10), (_) {
+      checkAndRenewQuests();
+    });
+  }
+
+  void completeQuest(int index) {
+    if (!_quests[index].isCompleted && !_quests[index].isCancelled) {
+      _quests[index].isCompleted = true;
+      _timers[index]?.cancel();
+      _timers.remove(index);
+      saveQuests();
+      notifyListeners();
+    }
+  }
+
+  void startQuestTimers() {
     _startQuestTimers();
   }
 
   void _startQuestTimers() {
+    _cancelAllTimers();
     for (int i = 0; i < _quests.length; i++) {
-      if (!_timers.containsKey(i) &&
-          !_quests[i].isCompleted &&
-          !_quests[i].isCancelled) {
+      if (!_quests[i].isCompleted && !_quests[i].isCancelled) {
         _timers[i] = Timer.periodic(Duration(seconds: 1), (timer) {
           if (_quests[i].remainingTime > 0) {
             _quests[i].remainingTime--;
             notifyListeners();
           } else {
             _quests[i].isCancelled = true;
+            print('Penalidade aplicada: ${_quests[i].penaltyPoints}');
+            _characterProvider.applyXpPenalty(
+                userId: userId, penalty: _quests[i].penaltyPoints);
             timer.cancel();
             _timers.remove(i);
+            saveQuests();
             notifyListeners();
           }
         });
@@ -77,40 +186,11 @@ class QuestProvider with ChangeNotifier {
     }
   }
 
-  void completeQuest(String userId, int index) {
-    if (!_quests[index].isCompleted && !_quests[index].isCancelled) {
-      _quests[index].isCompleted = true;
-      _timers[index]?.cancel();
-      _timers.remove(index);
-      saveQuests(userId);
-      notifyListeners();
+  void _cancelAllTimers() {
+    for (var timer in _timers.values) {
+      timer.cancel();
     }
-  }
-
-  void generateDailyQuests(String userId) {
-    _quests = [
-      Quest(
-        name: '30 flexões',
-        description: 'Faça 30 flexões',
-        rewardPoints: 50,
-        penaltyPoints: 10,
-      ),
-      Quest(
-        name: '60 agachamentos',
-        description: 'Faça 60 agachamentos',
-        rewardPoints: 70,
-        penaltyPoints: 15,
-      ),
-      Quest(
-        name: '40 abdominais',
-        description: 'Faça 40 abdominais',
-        rewardPoints: 100,
-        penaltyPoints: 20,
-      ),
-    ];
-    _startQuestTimers();
-    saveQuests(userId);
-    notifyListeners();
+    _timers.clear();
   }
 
   Future<void> loadQuests(String userId) async {
@@ -121,13 +201,9 @@ class QuestProvider with ChangeNotifier {
       if (doc.exists) {
         final data = doc.data() as Map<String, dynamic>?;
         if (data != null && data['quests'] != null) {
-          List<dynamic> questData = data['quests'];
-          _quests = questData.map((quest) => Quest.fromMap(quest)).toList();
-        } else {
-          generateDailyQuests(userId);
+          _quests =
+              (data['quests'] as List).map((q) => Quest.fromMap(q)).toList();
         }
-      } else {
-        generateDailyQuests(userId);
       }
       _startQuestTimers();
       notifyListeners();
@@ -136,7 +212,7 @@ class QuestProvider with ChangeNotifier {
     }
   }
 
-  Future<void> saveQuests(String userId) async {
+  Future<void> saveQuests() async {
     try {
       await _firestore.collection('quests').doc(userId).set({
         'quests': _quests.map((quest) => quest.toMap()).toList(),
@@ -148,9 +224,8 @@ class QuestProvider with ChangeNotifier {
 
   @override
   void dispose() {
-    for (var timer in _timers.values) {
-      timer.cancel();
-    }
+    _cancelAllTimers();
+    _renewalTimer?.cancel();
     super.dispose();
   }
 }

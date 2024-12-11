@@ -15,9 +15,7 @@ class QuestScreen extends StatelessWidget {
 
     if (userId == null) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text('Quests'),
-        ),
+        appBar: AppBar(title: Text('Quests')),
         body: Center(
           child: Text(
             'Erro: Usuário não autenticado.',
@@ -30,16 +28,11 @@ class QuestScreen extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (questProvider.quests.isEmpty) {
         await questProvider.loadQuests(userId);
-        if (questProvider.quests.isEmpty) {
-          questProvider.generateDailyQuests(userId);
-        }
       }
     });
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Quests'),
-      ),
+      appBar: AppBar(title: Text('Quests')),
       body: Column(
         children: [
           Padding(
@@ -75,14 +68,28 @@ class QuestScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final quest = questProvider.quests[index];
 
+                      Color cardColor;
+                      Color textColor;
+
+                      if (quest.isCompleted) {
+                        cardColor = Colors.green[100]!;
+                        textColor = Colors.black;
+                      } else if (quest.isCancelled) {
+                        cardColor = Colors.red[100]!;
+                        textColor = Colors.black;
+                      } else {
+                        cardColor = Colors.blueGrey[900]!;
+                        textColor = Colors.white;
+                      }
+
                       return Card(
-                        color: quest.isCompleted
-                            ? Colors.green[100]
-                            : quest.isCancelled
-                                ? Colors.red[100]
-                                : null,
+                        color: cardColor,
                         child: ListTile(
-                          title: Text(quest.name),
+                          title: Text(
+                            quest.name,
+                            style: TextStyle(
+                                color: textColor, fontWeight: FontWeight.bold),
+                          ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -90,13 +97,14 @@ class QuestScreen extends StatelessWidget {
                                 quest.isCancelled
                                     ? 'Tempo esgotado! Quest cancelada.'
                                     : 'Tempo restante: ${quest.remainingTime}s\n${quest.description}',
+                                style: TextStyle(color: textColor),
                               ),
                               if (!quest.isCancelled && !quest.isCompleted)
                                 Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(
                                     'Recompensa: +${quest.rewardPoints} XP\nPunição: -${quest.penaltyPoints} XP',
-                                    style: TextStyle(color: Colors.grey),
+                                    style: TextStyle(color: textColor),
                                   ),
                                 ),
                             ],
@@ -107,16 +115,16 @@ class QuestScreen extends StatelessWidget {
                                   ? Icon(Icons.close, color: Colors.red)
                                   : ElevatedButton(
                                       onPressed: () {
-                                        questProvider.completeQuest(
-                                            userId, index);
+                                        questProvider.completeQuest(index);
                                         characterProvider.addXp(
                                             userId: userId,
                                             xpGained: quest.rewardPoints);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
-                                              content: Text(
-                                                  'Quest completada! Você ganhou ${quest.rewardPoints} XP.')),
+                                            content: Text(
+                                                'Quest completada! Você ganhou ${quest.rewardPoints} XP.'),
+                                          ),
                                         );
                                       },
                                       child: Text('Completar'),

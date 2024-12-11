@@ -20,14 +20,14 @@ class Character {
   }) {
     // Certifique-se de que todos os slots estão inicializados
     equipment.addAll({
-      'Sword': equipment['Sword'] ?? null,
-      'Helmet': equipment['Helmet'] ?? null,
-      'Chest': equipment['Chest'] ?? null,
-      'Acc': equipment['Acc'] ?? null,
-      'Legs': equipment['Legs'] ?? null,
-      'Shield': equipment['Shield'] ?? null,
-      'Ring': equipment['Ring'] ?? null,
-      'Glove': equipment['Glove'] ?? null,
+      'Espada': equipment['Espada'] ?? null,
+      'Capacete': equipment['Capacete'] ?? null,
+      'Peitoral': equipment['Peitoral'] ?? null,
+      'Acessório': equipment['Acessório'] ?? null,
+      'Calça': equipment['Calça'] ?? null,
+      'Escudo': equipment['Escudo'] ?? null,
+      'Anel': equipment['Anel'] ?? null,
+      'Luva': equipment['Luva'] ?? null,
     });
   }
 
@@ -85,7 +85,7 @@ const Map<String, Map<String, int>> _equipmentBonuses = {
   'Elmo de Guerreiro': {'strength': 0, 'hp': 10, 'mp': 0},
   'Elmo de Ferro': {'strength': 0, 'hp': 5, 'mp': 0},
 
-  // Chest armors
+  // Peitoral armors
   'Peitoral de Aço': {'strength': 0, 'hp': 30, 'mp': 0},
   'Peitoral Mágico': {'strength': 0, 'hp': 0, 'mp': 15},
 
@@ -93,7 +93,7 @@ const Map<String, Map<String, int>> _equipmentBonuses = {
   'Anel Mágico': {'strength': 0, 'hp': 0, 'mp': 20},
   'Anel de Prata': {'strength': 2, 'hp': 0, 'mp': 5},
 
-  // Legs
+  // Calça
   'Perneiras de Aço': {'strength': 0, 'hp': 15, 'mp': 0},
   'Perneiras de Couro': {'strength': 0, 'hp': 5, 'mp': 0},
 
@@ -108,14 +108,14 @@ const Map<String, Map<String, int>> _equipmentBonuses = {
 
 // Atualização no equipamento inicial (incluindo os novos slots)
 final Map<String, String?> initialEquipment = {
-  'Sword': null,
-  'Helmet': null,
-  'Chest': null,
-  'Acc': null,
-  'Legs': null,
-  'Shield': null,
-  'Ring': null,
-  'Glove': null,
+  'Espada': null,
+  'Capacete': null,
+  'Peitoral': null,
+  'Acessório': null,
+  'Calça': null,
+  'Escudo': null,
+  'Anel': null,
+  'Luva': null,
 };
 
 // Atualize o construtor do Character para usar os novos slots

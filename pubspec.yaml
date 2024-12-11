@@ -21,11 +21,19 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^4.0.0
+  fake_cloud_firestore: ^3.1.0
+  fake_async: ^1.3.1
+  firebase_auth_mocks: ^0.14.1  # Versão com suporte a null safety
+  mockito: ^5.4.4
+  mocktail: ^1.0.4
+  build_runner: ^2.4.6
+
 
 flutter:
   uses-material-design: true
 
   assets:
     - assets/images/character.png  # Adicione esta linha para o asset da imagem
+    - assets/images/enemy.png
+    - assets/images/logo.png

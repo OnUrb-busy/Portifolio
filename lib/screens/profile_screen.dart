@@ -59,10 +59,11 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    _buildEquipmentSlot(context, userId, 'Sword', character),
-                    _buildEquipmentSlot(context, userId, 'Acc', character),
-                    _buildEquipmentSlot(context, userId, 'Glove', character),
-                    _buildEquipmentSlot(context, userId, 'Ring', character),
+                    _buildEquipmentSlot(context, userId, 'Espada', character),
+                    _buildEquipmentSlot(
+                        context, userId, 'Acessórios', character),
+                    _buildEquipmentSlot(context, userId, 'Luva', character),
+                    _buildEquipmentSlot(context, userId, 'Anel', character),
                   ],
                 ),
                 Column(
@@ -75,10 +76,10 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    _buildEquipmentSlot(context, userId, 'Helmet', character),
-                    _buildEquipmentSlot(context, userId, 'Chest', character),
-                    _buildEquipmentSlot(context, userId, 'Legs', character),
-                    _buildEquipmentSlot(context, userId, 'Shield', character),
+                    _buildEquipmentSlot(context, userId, 'Capacete', character),
+                    _buildEquipmentSlot(context, userId, 'Peitoral', character),
+                    _buildEquipmentSlot(context, userId, 'Calça', character),
+                    _buildEquipmentSlot(context, userId, 'Escudo', character),
                   ],
                 ),
               ],
@@ -230,14 +231,14 @@ class ProfileScreen extends StatelessWidget {
 
   List<Widget> _buildDynamicEquipmentList(Character character) {
     final List<String> slots = [
-      'Sword',
-      'Helmet',
-      'Chest',
-      'Acc',
-      'Legs',
-      'Shield',
-      'Ring',
-      'Glove',
+      'Espada',
+      'Capacete',
+      'Peitoral',
+      'Acessórios',
+      'Calça',
+      'Escudo',
+      'Anel',
+      'Luva',
     ];
 
     return slots.map((slot) {
@@ -257,10 +258,10 @@ class ProfileScreen extends StatelessWidget {
 }
 
 const Map<String, List<String>> _equipmentOptionsBySlot = {
-  'Sword': ['Espada Lendária', 'Espada Comum', 'Espada de Pedra'],
-  'Helmet': ['Elmo de Guerreiro', 'Elmo de Ferro', 'Elmo de Mago'],
-  'Chest': ['Peitoral de Aço', 'Peitoral Mágico'],
-  'Acc': ['Anel Mágico', 'Anel de Poder'],
-  'Ring': ['Anel de Prata'],
-  'Shield': ['Escudo de Bronze'],
+  'Espada': ['Espada Lendária', 'Espada Comum', 'Espada de Pedra'],
+  'Capacete': ['Elmo de Guerreiro', 'Elmo de Ferro', 'Elmo de Mago'],
+  'Peitoral': ['Peitoral de Aço', 'Peitoral Mágico'],
+  'Acessórios': ['Anel Mágico', 'Anel de Poder'],
+  'Anel': ['Anel de Prata'],
+  'Escudo': ['Escudo de Bronze'],
 };

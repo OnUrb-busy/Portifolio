@@ -12,14 +12,14 @@ class CharacterProvider with ChangeNotifier {
     currentHp: 70,
     currentMp: 30,
     equipment: {
-      'Sword': null,
-      'Helmet': null,
-      'Chest': null,
-      'Acc': null,
-      'Legs': null,
-      'Shield': null,
-      'Ring': null,
-      'Glove': null,
+      'Espada': null,
+      'Capacete': null,
+      'Peitoral': null,
+      'Acessórios': null,
+      'calça': null,
+      'Escudo': null,
+      'Anel': null,
+      'Luva': null,
     },
     inventory: [],
   );
@@ -27,11 +27,13 @@ class CharacterProvider with ChangeNotifier {
   Timer? _hpRegenTimer;
   Timer? _mpRegenTimer;
 
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
 
   Character get character => _character;
 
-  CharacterProvider() {
+  // Construtor modificado para permitir a injeção de FirebaseFirestore
+  CharacterProvider({FirebaseFirestore? firestore})
+      : _firestore = firestore ?? FirebaseFirestore.instance {
     _startRegenTimers();
   }
 
@@ -92,6 +94,15 @@ class CharacterProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void applyXpPenalty({required String userId, required int penalty}) {
+    _character.xp -= penalty;
+    if (_character.xp < 0) {
+      _character.xp = 0;
+    }
+    saveCharacter(userId: userId);
+    notifyListeners();
+  }
+
   void levelUp({required String userId}) {
     _character.level += 1;
     _character.strength += 5;
@@ -123,7 +134,6 @@ class CharacterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /// Adiciona um item ao inventário do personagem
   void addReward({required String userId, required String item}) {
     if (!_character.inventory.contains(item)) {
       _character.inventory.add(item);
