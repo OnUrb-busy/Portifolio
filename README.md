@@ -123,7 +123,7 @@ Foi utilizado **TDD** no desenvolvimento do projeto.
 
 #### **Exemplos de Testes**
 
-**Teste de Login**
+**Teste de Lv UP**
 ```dart
 test(
         'Adicionar XP aumenta o XP e faz subir de nível se o limite for atingido',
@@ -136,7 +136,7 @@ test(
 }
 ```
 
-**Teste de Atualização de Atributos**
+**Teste de Penalidade de XP**
 ```dart
 void main() {
   test('Aplicar penalidade de XP diminui o XP sem ficar abaixo de zero', () {
