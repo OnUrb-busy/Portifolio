@@ -1,70 +1,228 @@
-# Portifolio
-Projeto do portifólio
+# QuestYourself
 
+**Projeto de Gamificação para Atividade Física**
 
-#Escopo 
+Aplicativo desenvolvido por **Bruno Buzzi**
 
-Um aplicativo de gamificação para atividade física, que tem o intuito principal, motivar os usuários a praticarem exercícios físicos de forma divertida e recompensadora. O app irá utilizar elementos de RPG, onde cada atividade física realizada será uma “quest”. Ao concluir as “quests”, os atributos, do personagem, irão melhorar como resistência, força, etc. Oferecera recompensas como itens que podem ser equipados no personagem para aumentar seus atributos. O sistema também contará com uma mecânica de combate para testar a força do personagem. 
+Email: bruno.buzzi@catolicasc.edu.br  
+Instituição: **Católica de Santa Catarina**  
+Curso: **Engenharia de Software**  
+Disciplina: **T2ESOFT08N | Portfólio de Projeto**
 
-Objetivo do aplicativo: 
-- Estimular o usuário a realizar atividades físicas diárias, utilizando técnicas de gamificação como missões (quests), níveis, atributos e recompensas. 
-- Oferecer uma experiência divertida e envolvente, transformando a rotina de exercícios em um jogo. 
+---
 
-Funcionalidades principais: 
-- Atribuição de quests diárias. 
-- Sistema de progressão de níveis e atributos baseado na conclusão das atividades físicas. 
-- Sistema de equipamentos que o usuário pode ganhar e usar, modificando os atributos do personagem. 
-- Punição automática que afeta os atributos do personagem quando o usuário não cumpre as atividades. 
-- Sistema de combate para testar os atributos adquiridos e recompensar ou punir conforme o desempenho. 
+## 💡 **Motivação**
 
-#Requisitos Funcionais 
+Muitas pessoas têm dificuldade em manter uma rotina de exercícios físicos. Gamificar os exercícios transforma essa rotina em uma experiência divertida e recompensadora. Utilizando elementos de RPG, os usuários se sentem motivados a completar "quests" e evoluir seus personagens.
 
-Cadastro e Login  
-RF 001 - O usuário pode se cadastrar no aplicativo através de e-mail e senha. 
-RF 002 - O usuário pode realizar login utilizando e-mail e senha. 
+---
 
-Gerenciamento de Personagem  
-RF 003 - O usuário poderá visualizar a tela de perfil do personagem, que mostra os atributos atuais, nível, e equipamentos equipados. 
+## 📚 **Escopo**
 
-Sistema de Quests 
-RF 004 - O usuário poderá visualizar uma lista de quests diárias e semanais com atividades físicas. 
-RF 005 - O usuário poderá aceitar e realizar uma quest. Ao completar, o sistema atualizará automaticamente seus atributos e nível. 
-RF 006 - O sistema deve permitir que o usuário veja o status de suas quests e recompensas. 
+O QuestYourself é um aplicativo de gamificação para atividades físicas. Ele utiliza elementos de RPG para motivar os usuários a se exercitarem de forma divertida e recompensadora.
 
-Punições e Recompensas  
-RF 007 - Se o usuário não completar uma atividade física diária, o sistema deve reduzir os atributos do personagem como punição. 
-RF 008 - O sistema deve recompensar o usuário com itens/equipamentos quando certas metas de exercícios forem alcançadas. 
+### **Objetivo**
+- Estimular o usuário a realizar atividades físicas diárias utilizando gamificação.
+- Transformar a rotina de exercícios em uma experiência divertida e envolvente.
 
-Equipamentos 
-RF 009 - O usuário poderá visualizar e equipar itens que modificam os atributos do personagem. 
-RF 010 - O usuário poderá ver o impacto dos equipamentos nos atributos diretamente na interface do personagem. 
+### **Funcionalidades Principais**
+- Atribuição de quests diárias.
+- Sistema de progressão de níveis e atributos.
+- Sistema de equipamentos que afetam os atributos do personagem.
+- Punição automática por não completar quests.
+- Sistema de combate para testar os atributos do personagem.
 
-Sistema de Combate 
-RF 011 - O usuário poderá participar de combates baseados nos atributos do personagem. 
-RF 012 - O sistema deve gerar recompensas/punições baseadas no resultado do combate, refletindo no perfil do personagem. 
+---
 
-#Requisitos Não Funcionais (RNF) 
+## 📊 **Requisitos Funcionais (RF)**
 
-Escalabilidade 
-RNF 001 - O aplicativo deve ser capaz de suportar o crescimento contínuo de usuários, garantindo que, mesmo com um número crescente de participantes, o desempenho não seja comprometido. 
-RNF 002 - O banco de dados deve ser escalável e permitir a inserção de novos dados de atividades e progressos do usuário sem degradação do tempo de resposta. 
+### **Autenticação**
+- **RF 001**: O usuário pode se cadastrar com e-mail e senha.
+- **RF 002**: O usuário pode realizar login com e-mail e senha.
 
-Segurança  
-RNF 003 - O sistema deve garantir que apenas o usuário tenha acesso a seus dados, com autenticação forte (por exemplo, autenticação de dois fatores). 
+### **Gerenciamento de Personagem**
+- **RF 003**: Visualizar perfil do personagem, incluindo atributos e equipamentos equipados.
 
-UI/UX  
-RNF 004 - A interface do usuário deve ser intuitiva, permitindo que as principais ações (visualizar quests, aceitar, equipar itens, ver o progresso) sejam realizadas em até três toques. 
-RNF 005 - O aplicativo deve ser responsivo, adaptando-se bem a diferentes tamanhos de tela e dispositivos (smartphones, tablets). 
+### **Sistema de Quests**
+- **RF 004**: Visualizar uma lista de quests diárias.
+- **RF 005**: Concluir quests e atualizar atributos automaticamente.
+- **RF 006**: Visualizar status das quests e recompensas.
 
-Desempenho 
-RNF 006 - O tempo de resposta para carregar quests e o perfil do personagem deve ser inferior a 5 segundos.
+### **Punições e Recompensas**
+- **RF 007**: Penalização por não completar quests.
+- **RF 008**: Recompensas ao atingir metas de exercícios.
 
-#Trabalhos Correlatos
+### **Equipamentos**
+- **RF 009**: Equipar itens que afetam os atributos do personagem.
+- **RF 010**: Os equipamentos afetam os atributos do personagem visivelmente.
 
-Workout Quest - Gamified Gym 
-Sobre este aplicativo: 
-Condicionamento físico é o objetivo. Nossa tecnologia inteligente se adapta às suas necessidades, fornecendo as rotinas mais eficazes usando o equipamento que você tem em casa. 
+### **Sistema de Combate**
+- **RF 011**: Participar de combates que escalam com os atributos.
+- **RF 012**: Gerar recompensas/punições com base no resultado do combate.
 
-Do it Now : Tarefas RPG 
-Sobre este aplicativo: 
-Do It Now é uma fantástica lista de tarefas que te ajuda trazendo elementos de jogos aos seus afazeres diários. Programe-se, adicione lembretes e organize sua vida com um sistema de habilidades, atributos e níveis.
+---
+
+## 🌐 **Requisitos Não Funcionais (RNF)**
+
+- **RNF 001**: Suporte ao crescimento contínuo de usuários.
+- **RNF 002**: Banco de dados escalável.
+- **RNF 003**: Autenticação forte para segurança.
+- **RNF 004**: Interface intuitiva (principais ações em até 3 toques).
+- **RNF 005**: Design responsivo para diferentes dispositivos.
+- **RNF 006**: Tempo de resposta inferior a 5 segundos.
+
+---
+
+## 🛠️ **Tecnologias Aplicadas**
+
+### **Linguagens e Frameworks**
+- Dart (Flutter)
+
+### **Banco de Dados**
+- Firebase Firestore
+
+### **Ferramentas**
+- Flutter SDK
+- Firebase Authentication
+- Git
+- Visual Studio Code
+
+### **Bibliotecas**
+- Provider
+- FontAwesome (para ícones personalizados)
+- cloud_firestore (integração com Firestore)
+- firebase_auth (autenticação)
+- flutter_test (testes unitários)
+- intl (formatação de datas e números)
+- dart:async (operações assíncronas)
+- dart:math (geração de recompensas aleatórias)
+
+---
+
+## 🔄 **Metodologia**
+
+- **Metodologia**: Kanban
+- **Ferramenta de Gerenciamento**: Trello
+- **Práticas de Desenvolvimento**:
+  - Entregas incrementais
+  - Sprints semanais
+  - Desenvolvimento Orientado a Testes (TDD)
+
+---
+
+## 🎨 **Estrutura de Dados**
+
+### **Classes Principais**
+
+#### `Character`
+```dart
+class Character {
+  int level;
+  int strength;
+  int xp;
+  int xpToNextLevel;
+  int currentHp;
+  int currentMp;
+  Map<String, String?> equipment;
+  List<String> inventory;
+
+  Character({
+    required this.level,
+    required this.strength,
+    required this.xp,
+    required this.xpToNextLevel,
+    required this.currentHp,
+    required this.currentMp,
+    required this.equipment,
+    this.inventory = const [],
+  });
+
+  int get totalStrength => strength + _getEquipmentBonus('strength');
+  int get totalHp => 50 + (level * 20) + _getEquipmentBonus('hp');
+  int get totalMp => 20 + (level * 10) + _getEquipmentBonus('mp');
+}
+```
+
+#### `Quest`
+```dart
+class Quest {
+  final String name;
+  final String description;
+  final int rewardPoints;
+  final int penaltyPoints;
+  bool isCompleted;
+  bool isCancelled;
+  int remainingTime;
+
+  Quest({
+    required this.name,
+    required this.description,
+    required this.rewardPoints,
+    required this.penaltyPoints,
+    this.isCompleted = false,
+    this.isCancelled = false,
+    this.remainingTime = 300,
+  });
+}
+```
+
+---
+
+## 📁 **Organização do Repositório**
+
+```
+lib/
+│-- main.dart
+│
+├── models/
+│   └── character.dart
+│
+├── providers/
+│   ├── character_provider.dart
+│   ├── combat_provider.dart
+│   └── quest_provider.dart
+│
+├── screens/
+│   ├── combat_screen.dart
+│   ├── login_screen.dart
+│   ├── profile_screen.dart
+│   ├── quest_screen.dart
+│   └── register_screen.dart
+│
+└── services/
+    └── auth_service.dart
+```
+
+---
+
+## 📊 **Diagrama de Classes**
+
+![Diagrama de Classes](diagramas/diagrama_classes.png)
+
+---
+
+## 📊 **Diagrama de Atividades**
+
+![Diagrama de Classes](diagramas/diagrama_atividades.png)
+
+---
+
+## 🚀 **Trabalhos Correlatos**
+
+### **Workout Quest - Gamified Gym**
+- **Descrição**: Aplicativo que adapta rotinas de exercícios físicos com base no equipamento disponível em casa.
+
+### **Do It Now: Tarefas RPG**
+- **Descrição**: Aplicativo de lista de tarefas com elementos de RPG, incluindo habilidades, atributos e níveis para motivar o usuário a cumprir suas tarefas diárias.
+
+---
+
+## 🚀 **Trabalhos Futuros**
+
+- Aprimorar o sistema de batalha.
+- Implementar multiplayer.
+- Adicionar gestão de mana/energia (MP).
+- Melhorar a personalização dos personagens.
+- Adicionar mais tipos de quests e desafios.
+- Melhorar UI/UX.
+- Disponibilizar o app em outras línguas.

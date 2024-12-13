@@ -6,7 +6,7 @@ class Character {
   int currentHp;
   int currentMp;
   Map<String, String?> equipment;
-  List<String> inventory; // Novo campo para o inventário
+  List<String> inventory;
 
   Character({
     required this.level,
@@ -16,7 +16,7 @@ class Character {
     required this.currentHp,
     required this.currentMp,
     required this.equipment,
-    this.inventory = const [], // Inicializa como lista vazia
+    this.inventory = const [],
   }) {
     // Certifique-se de que todos os slots estão inicializados
     equipment.addAll({

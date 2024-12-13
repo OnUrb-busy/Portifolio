@@ -3,7 +3,6 @@ import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_application_1/providers/quest_provider.dart';
 import 'package:flutter_application_1/providers/character_provider.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:fake_async/fake_async.dart';
 
 // Mock para CharacterProvider
 class MockCharacterProvider extends Mock implements CharacterProvider {}

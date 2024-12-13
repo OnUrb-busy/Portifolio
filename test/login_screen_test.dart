@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/screens/login_screen.dart';
 import 'package:flutter_application_1/providers/character_provider.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_application_1/providers/character_provider.dart';
 void main() {
   testWidgets('LoginScreen - verifica elementos e interação',
       (WidgetTester tester) async {
-    final auth = MockFirebaseAuth();
     await tester.pumpWidget(
       MaterialApp(
         home: ChangeNotifierProvider(

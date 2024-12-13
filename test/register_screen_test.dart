@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_application_1/screens/register_screen.dart';
 
 void main() {
   testWidgets('RegisterScreen - verifica elementos e interação',
       (WidgetTester tester) async {
-    final auth = MockFirebaseAuth();
     await tester.pumpWidget(MaterialApp(home: RegisterScreen()));
 
     // Verifica se os campos de email e senha estão presentes.
