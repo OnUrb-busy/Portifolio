@@ -110,6 +110,62 @@ O QuestYourself é um aplicativo de gamificação para atividades físicas. Ele 
 
 ---
 
+## 🧪 **Testes Unitários**
+
+### **Uso de TDD (Test-Driven Development)**
+Foi utilizado **TDD** no desenvolvimento do projeto.
+
+### **Criação de Testes Unitários**
+- Foi criado um teste unitário para cada funcionalidade implementada.
+
+### **Execução de Testes**
+- Os testes foram executados utilizando o pacote `flutter_test`.
+
+#### **Exemplos de Testes**
+
+**Teste de Login**
+```dart
+test(
+        'Adicionar XP aumenta o XP e faz subir de nível se o limite for atingido',
+        () {
+      characterProvider.addXp(userId: userId, xpGained: 110);
+
+      expect(characterProvider.character.xp, equals(10));
+      expect(characterProvider.character.level, equals(2));
+    });
+}
+```
+
+**Teste de Atualização de Atributos**
+```dart
+void main() {
+  test('Aplicar penalidade de XP diminui o XP sem ficar abaixo de zero', () {
+      characterProvider.addXp(userId: userId, xpGained: 50);
+      characterProvider.applyXpPenalty(userId: userId, penalty: 60);
+
+      expect(characterProvider.character.xp, equals(0));
+    });
+}
+```
+
+**Teste de Equipamento**
+```dart
+void main() {
+  test('Equipar item atualiza o slot de equipamento corretamente', () {
+      characterProvider.equipItem(
+        userId: userId,
+        slot: 'Espada',
+        item: 'Espada Lendária',
+      );
+
+      expect(characterProvider.character.equipment['Espada'],
+          equals('Espada Lendária'));
+    });
+}
+```
+
+---
+
 ## 🎨 **Estrutura de Dados**
 
 ### **Classes Principais**
